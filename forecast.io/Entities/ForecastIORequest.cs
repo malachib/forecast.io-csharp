@@ -2,7 +2,11 @@
 using System;
 using System.Globalization;
 using System.Text;
+#if MONO
+using RestSharp;
+#else
 using System.Web.Script.Serialization;
+#endif
 
 namespace ForecastIO
 {
@@ -38,8 +42,16 @@ namespace ForecastIO
                 _apiCallsMade = client.ResponseHeaders["X-Forecast-API-Calls"];
             }
 
+#if MONO
+			// UNTESTED
+			var restResponse = new RestSharp.RestResponse();
+			restResponse.Content = result;
+			var s = new RestSharp.Deserializers.JsonDeserializer();
+			var dataObject = s.Deserialize<ForecastIOResponse>(restResponse);
+#else
             var serializer = new JavaScriptSerializer();
             var dataObject = serializer.Deserialize<ForecastIOResponse>(result);
+#endif
 
             return dataObject;
 
