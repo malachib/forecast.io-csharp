@@ -1,4 +1,6 @@
-﻿using ForecastIO.Extensions;
+﻿#define RESTSHARP
+
+using ForecastIO.Extensions;
 using System;
 using System.Globalization;
 using System.Text;
@@ -6,7 +8,9 @@ using System.Runtime.Serialization.Json;
 
 
 #if MONO
+#if RESTSHARP
 using RestSharp;
+#endif
 #else
 using System.Web.Script.Serialization;
 #endif
