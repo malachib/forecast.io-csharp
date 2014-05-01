@@ -2,6 +2,9 @@
 using System;
 using System.Globalization;
 using System.Text;
+using System.Runtime.Serialization.Json;
+
+
 #if MONO
 using RestSharp;
 #else
@@ -43,16 +46,23 @@ namespace ForecastIO
             }
 
 #if MONO
-			// UNTESTED
+#if RESTSHARP
+			// RestSharp mode works
 			var restResponse = new RestSharp.RestResponse();
 			restResponse.Content = result;
 			var s = new RestSharp.Deserializers.JsonDeserializer();
 			var dataObject = s.Deserialize<ForecastIOResponse>(restResponse);
 #else
+			// Kinda big and fat, but doesn't have RESTSHARP dependency
+			var _result = Encoding.UTF32.GetBytes(result);
+			var stream = new System.IO.MemoryStream(_result);
+			var s = new DataContractJsonSerializer(typeof(ForecastIOResponse));
+			var dataObject = (ForecastIOResponse) s.ReadObject(stream);
+#endif
+#else
             var serializer = new JavaScriptSerializer();
             var dataObject = serializer.Deserialize<ForecastIOResponse>(result);
 #endif
-
             return dataObject;
 
         }
