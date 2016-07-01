@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-*",
+  "version": "1.0.0",
   "description": "C# Wrapper Library For Forecast.io",
   "authors": [
     "f0xy",
@@ -17,23 +17,17 @@
     "licenseUrl": "https://github.com/f0xy/forecast.io-csharp/blob/master/LICENSE.md"
   },
   "dependencies": {
-    "Newtonsoft.Json": "8.0.1",
+    "Newtonsoft.Json": "9.0.1",
     "Microsoft.NETCore.App": {
       "type": "platform",
-      "version": "1.0.0-rc2-3002702"
+      "version": "1.0.0"
     }
   },
   "frameworks": {
-    "net40": { },
-    /*
-     I think only net40 surface area is covered by Microsoft.NETCore.App at this time
-    "net461": { },
-    */
     "netcoreapp1.0": {
       "buildOptions": {
         "define": [ "DNXCORE50" ]
-      },
-      "imports": "dnxcore50"
+      }
     }
   },
   "buildOptions": {
